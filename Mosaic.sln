@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mosaic", "Mosaic\Mosaic.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmguWrapper", "EmguWrapper\EmguWrapper.csproj", "{D25B0DD5-C373-4C33-B7E5-46C89BD3B2FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageHelper", "ImageHelper\ImageHelper.csproj", "{356F02D5-061A-4E22-9A52-21532B73E147}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{D25B0DD5-C373-4C33-B7E5-46C89BD3B2FB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D25B0DD5-C373-4C33-B7E5-46C89BD3B2FB}.Release|x64.ActiveCfg = Release|x64
 		{D25B0DD5-C373-4C33-B7E5-46C89BD3B2FB}.Release|x64.Build.0 = Release|x64
+		{356F02D5-061A-4E22-9A52-21532B73E147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356F02D5-061A-4E22-9A52-21532B73E147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356F02D5-061A-4E22-9A52-21532B73E147}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{356F02D5-061A-4E22-9A52-21532B73E147}.Debug|x64.Build.0 = Debug|Any CPU
+		{356F02D5-061A-4E22-9A52-21532B73E147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356F02D5-061A-4E22-9A52-21532B73E147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{356F02D5-061A-4E22-9A52-21532B73E147}.Release|x64.ActiveCfg = Release|Any CPU
+		{356F02D5-061A-4E22-9A52-21532B73E147}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

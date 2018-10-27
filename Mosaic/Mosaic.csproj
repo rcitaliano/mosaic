@@ -101,6 +101,15 @@
       <Project>{d25b0dd5-c373-4c33-b7e5-46c89bd3b2fb}</Project>
       <Name>EmguWrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageHelper\ImageHelper.csproj">
+      <Project>{356f02d5-061a-4e22-9a52-21532b73e147}</Project>
+      <Name>ImageHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="base.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
