@@ -141,7 +141,7 @@ namespace ImageHelper
                     max_h = current.Height;
                 }
             }
-            int rows = (int) Math.Floor(Math.Sqrt(imageCount));
+            int rows = (int) Math.Ceiling(Math.Sqrt(imageCount));
             int columns = (int)Math.Ceiling(Math.Sqrt(imageCount));
             height /= imageCount;
             width /= imageCount;
