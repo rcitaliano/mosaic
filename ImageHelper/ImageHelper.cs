@@ -45,16 +45,18 @@ namespace ImageHelper
             g.Dispose();
             return newBitmap;
         }
-        public static Bitmap TestImage()
+        public static Bitmap TestImage(Bitmap baseImage,
+            float opacity,
+            int amountOfImages = 132,
+            int size = 167)
         {
-            int amountOfImages = 144;
-            int size = 30;
             Bitmap flag = new Bitmap(
-                amountOfImages * size,
-                amountOfImages * size);
+                size * 12,
+                size * 11);
             Graphics flagGraphics = Graphics.FromImage(flag);
             var localWidth = 0;
             var localHeight = 0;
+            int index = 1;
             while (localHeight < flag.Height)
             {
                 if (localWidth + size > flag.Width)
@@ -70,8 +72,36 @@ namespace ImageHelper
                     new SolidBrush(color), 
                     new Rectangle(new Point(localWidth, localHeight), new Size(size, size))
                     );
+                flagGraphics.DrawString(
+                    index.ToString(),
+                    new Font("arial", 16f),
+                    new SolidBrush(Color.Black),
+                    new Rectangle(new Point(localWidth, localHeight), new Size(size, size)));
                 localWidth += size;
+                index++;
             }
+
+            //create a color matrix object  
+            ColorMatrix matrix = new ColorMatrix();
+
+            //set the opacity  
+            matrix.Matrix33 = opacity;
+
+            //create image attributes  
+            ImageAttributes attributes = new ImageAttributes();
+
+            //set the color(opacity) of the image  
+            attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+            flagGraphics.DrawImage(baseImage,
+                new Rectangle(
+                    (flag.Width/2)- baseImage.Width/2, 
+                    (flag.Height/2) - baseImage.Height/2,
+                    baseImage.Width, 
+                    baseImage.Height),
+                0, 0, baseImage.Width, baseImage.Height,
+                GraphicsUnit.Pixel,
+                attributes);
             return flag;
         }
         public static Bitmap ConcatenateImages(IEnumerable<FileInfo> files,
@@ -111,11 +141,13 @@ namespace ImageHelper
                     max_h = current.Height;
                 }
             }
+            int rows = (int) Math.Floor(Math.Sqrt(imageCount));
+            int columns = (int)Math.Ceiling(Math.Sqrt(imageCount));
             height /= imageCount;
             width /= imageCount;
             int square  = (int)(Math.Ceiling( Math.Sqrt(imageCount)));
             //newBitmap = new Bitmap(finalWidth, finalHeight);
-            newBitmap = new Bitmap(baseImage.Width,baseImage.Height);
+            newBitmap = new Bitmap(imageSize*columns, imageSize*rows);
             using (var g = Graphics.FromImage(newBitmap))
             {
                 // Create solid brush.
@@ -125,19 +157,19 @@ namespace ImageHelper
                 int index = 0;
                 while (localHeight < newBitmap.Height)
                 {
+                    if (localWidth + imageSize > newBitmap.Width)
+                    {
+                        localWidth = 0;
+                        localHeight += imageSize;
+                    }
                     g.DrawImage(list[index],
                         new Rectangle(new Point(localWidth, localHeight), new Size(imageSize, imageSize))
                         );
                     localWidth += imageSize;
                     index++;
-                    if (index == files.Count())
+                    if (index == list.Count)
                     {
                         index = 0;
-                    }
-                    if (localWidth > newBitmap.Width)
-                    {
-                        localWidth = 0;
-                        localHeight += imageSize;
                     }
                 }
                 //create a color matrix object  
@@ -153,8 +185,12 @@ namespace ImageHelper
                 attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
                 g.DrawImage(baseImage,
-                    new Rectangle(0, 0, baseImage.Width, baseImage.Height), 
-                    0, 0, baseImage.Width, baseImage.Height, 
+                    new Rectangle(
+                        (newBitmap.Width / 2) - baseImage.Width / 2,
+                        (newBitmap.Height / 2) - baseImage.Height / 2,
+                        baseImage.Width,
+                        baseImage.Height),
+                    0, 0, baseImage.Width, baseImage.Height,
                     GraphicsUnit.Pixel,
                     attributes);
 

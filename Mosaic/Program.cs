@@ -20,11 +20,14 @@ namespace Mosaic
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
             DirectoryInfo dir = new DirectoryInfo("C:\\Users\\Public\\Pictures\\HeM FOTOS");
+            //ImageHelper.ImageHelper.TestImage(
+            //    (Bitmap)Image.FromFile("base.png"),
+            //    0.5f).Save("test.png", System.Drawing.Imaging.ImageFormat.Png);
             ImageHelper.ImageHelper.ConcatenateImages(
                 dir.EnumerateFiles(),
                 3000,
                 3000,
-                100,
+                167,
                 (Bitmap)Image.FromFile("base.png"),
                 0.5f,
                 false
@@ -33,7 +36,7 @@ namespace Mosaic
                 dir.EnumerateFiles(),
                 3000,
                 3000,
-                100,
+                167,
                 (Bitmap)Image.FromFile("base.png"),
                 0.5f,
                 true
