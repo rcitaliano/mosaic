@@ -197,5 +197,74 @@ namespace ImageHelper
             }
             return newBitmap;
         }
+        public static List<Bitmap> LoadFolder(string path)
+        {
+            List<Bitmap> list = new List<Bitmap>();
+            DirectoryInfo dir = new DirectoryInfo(path);
+            if (dir.Exists)
+            {
+                // load the files
+                foreach (var file in dir.EnumerateFiles())
+                {
+                    if (file.Exists)
+                    {
+                        try
+                        {
+                            list.Add((Bitmap)Image.FromFile(file.FullName));
+                        }
+                        catch (Exception)
+                        {
+                            //just skip this image
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        public static Bitmap CutImage(Image image, Point main, float aspectRatio)
+        {
+            var imageSize = image.Size;
+            Size newSize;
+            Point newMain = main;
+
+            // calculate the new main point
+            if (imageSize.Height >= imageSize.Width)
+            {
+                newSize = new Size(imageSize.Width, imageSize.Width);
+                
+                newMain.Y -= newSize.Height / 2;
+                if (newMain.Y < 0)
+                {
+                    newMain.Y = 0;
+                }
+                else if (newMain.Y+ newSize.Height > imageSize.Height)
+                {
+                    newMain.Y = imageSize.Height - newSize.Height;
+                }
+                newMain.X = 0;
+            }
+            else
+            {
+                newSize = new Size(imageSize.Height, imageSize.Height);
+                newMain.X -= newSize.Width / 2;
+                if (newMain.X < 0)
+                {
+                    newMain.X = 0;
+                }
+                else if (newMain.X + newSize.Width > imageSize.Width)
+                {
+                    newMain.Y = imageSize.Width - newSize.Width;
+                }
+                newMain.Y = 0;
+            }
+            Bitmap cut = new Bitmap(newSize.Width,newSize.Height);
+            Graphics g = Graphics.FromImage(cut);
+            g.DrawImage(image,
+                new Rectangle(new Point(0, 0), newSize),
+                new Rectangle(newMain, newSize),
+                GraphicsUnit.Pixel);
+            return cut;
+        }
     }
 }
