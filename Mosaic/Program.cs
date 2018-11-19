@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -18,8 +19,27 @@ namespace Mosaic
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new CutImages("C:\\Users\\Public\\Pictures\\hem nuove"));
-            //return;
+            DialogResult dialogResult = DialogResult.Cancel;
+            do
+            {
+                dialogResult = MessageBox.Show("Sure", "Do you want to cut the photos?", MessageBoxButtons.YesNoCancel);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                    dialog.IsFolderPicker = true;
+                    dialog.Title = "Select the folder where the photos are";
+                    if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                    {
+                        Application.Run(new CutImages(dialog.FileName));
+                    }
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    Application.Run(new Form1());
+                }
+            }
+            while (dialogResult != DialogResult.Cancel);
+            return;
             DirectoryInfo dir = new DirectoryInfo("C:\\Users\\Public\\Pictures\\HEM tagliate");
             //ImageHelper.ImageHelper.TestImage(
             //    (Bitmap)Image.FromFile("base.png"),
