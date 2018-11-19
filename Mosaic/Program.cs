@@ -22,7 +22,7 @@ namespace Mosaic
             DialogResult dialogResult = DialogResult.Cancel;
             do
             {
-                dialogResult = MessageBox.Show("Sure", "Do you want to cut the photos?", MessageBoxButtons.YesNoCancel);
+                dialogResult = MessageBox.Show("Do you want to cut the photos?", "Mosaic", MessageBoxButtons.YesNoCancel);
                 if (dialogResult == DialogResult.Yes)
                 {
                     CommonOpenFileDialog dialog = new CommonOpenFileDialog();
